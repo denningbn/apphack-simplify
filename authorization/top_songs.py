@@ -3,7 +3,7 @@ from spotipy.oauth2 import SpotifyOAuth
 from authorization.auth import get_spotify_obj
 # from auth import get_spotify_obj
 
-scope = "user-read-email playlist-modify-public user-library-read user-library-modify"
+scope = "user-read-email playlist-modify-public user-library-read user-library-modify user-top-read"
 
 sp = get_spotify_obj(scope)
 
