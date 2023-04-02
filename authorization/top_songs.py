@@ -1,7 +1,9 @@
 import spotipy
 from spotipy.oauth2 import SpotifyOAuth
 from auth import get_spotify_obj
+from auth import get_spotify_obj
 
+scope = "user-read-email playlist-modify-public user-library-read user-library-modify user-top-read"
 scope = "user-read-email playlist-modify-public user-library-read user-library-modify user-top-read"
 
 sp = get_spotify_obj(scope)
@@ -74,6 +76,7 @@ def recommendations_for_user(limit, time_range):
     #the dictionaries are keyed by name, and they return the id of the item
     #which the recommendations function needs
 
+
     artist_ids = []
 
     for artist_dict in get_top_artists(1,time_range):
@@ -92,6 +95,7 @@ def recommended_playlist(limit, time_range, name):
     recc = recommendations_for_user(limit,time_range)
 
     new_playlist_id = make_playlist(name, True, False, "Your recommended songs! :D")['id']
+
 
     recc_song_ids = []
     for item in recc['tracks']:
