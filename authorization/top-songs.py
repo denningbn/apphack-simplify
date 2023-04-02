@@ -2,17 +2,22 @@ import spotipy
 from spotipy.oauth2 import SpotifyOAuth
 from auth import get_spotify_obj
 
-scope = "user-read-email playlist-modify-public"
+scope = "user-read-email playlist-modify-public user-library-read user-library-modify"
 
 sp = get_spotify_obj(scope)
 
 def get_top_songs(limit, time_range):
     results = sp.current_user_top_tracks(limit=limit, offset=0, time_range=time_range)
 
+    songDict = {}
     for idx, item in enumerate(results['items']):
         album = item['album']
         name = item['name']
+
+        songdict[idx] = (album, " - ", name)
         print (idx + 1, album['artists'][0]['name'], " - ",album['name'], " - ", name)
+
+    print(songDict)
 
 
 def get_top_albums():
@@ -40,4 +45,4 @@ def make_playlist(name, is_public, is_collaborative, description ):
 def get_user():
     return sp.me()
 
-print(get_user())
+get_top_songs(5,'medium_term')
