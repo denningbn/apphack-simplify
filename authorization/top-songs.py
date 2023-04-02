@@ -2,7 +2,7 @@ import spotipy
 from spotipy.oauth2 import SpotifyOAuth
 from auth import get_spotify_obj
 
-scope = "user-top-read"
+scope = "user-read-email playlist-modify-public"
 
 sp = get_spotify_obj(scope)
 
@@ -34,4 +34,10 @@ def get_featured_playlists():
         description = item['description']
         print(idx + 1, " - ", name, " - ", description)
 
-get_top_songs(20, 'medium_term')
+def make_playlist(name, is_public, is_collaborative, description ):
+    sp.user_playlist_create(sp.me()['id'], name, public=is_public, collaborative=is_collaborative, description=description)
+
+def get_user():
+    return sp.me()
+
+print(get_user())
