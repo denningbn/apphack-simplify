@@ -20,23 +20,31 @@ def get_top_songs(limit, time_range):
     print(songDict)
 
 
-def get_top_albums():
+def get_top_artists():
     results = sp.current_user_top_artists(limit=20, offset=0, time_range='medium_term')
+
+    artistsDict = {}
 
     for idx, item in enumerate(results['items']):
         popularity = item['popularity']
         genres = item['genres']
         name = item['name']
+        artistDict[idx] = (name)
 
         print(idx + 1, " - ", name)
+
+
 
 def get_featured_playlists():
     results = sp.featured_playlists(locale=None, country=None, timestamp=None, limit=20, offset=0)
     
+    playlistDict = {}
     print(results['message'])
     for idx, item in enumerate(results['playlists']['items']):
         name = item['name']
         description = item['description']
+        playlistDict[idx] = (name, " - ", description)
+
         print(idx + 1, " - ", name, " - ", description)
 
 def make_playlist(name, is_public, is_collaborative, description ):
