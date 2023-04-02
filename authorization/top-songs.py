@@ -65,14 +65,24 @@ def get_playlists(limit):
         #print(idx + 1, " - ", item['name'], " - ", item['id'])
 
 def get_top_genres(limit, time_range):
-    results = sp.current_user_top_artists(limit=20, offset=0, time_range='medium_term')
+    results = sp.current_user_top_artists(limit=limit, offset=0, time_range=time_range)
     
-    genres = []
+    genres = {}
 
-    for genre in results:
-        genres.append(genre)
+    for item in results:
+        name = item['name']
+        genre_id = item['id']
 
-def recommend_genres():
-    seeds = recommendation_genre_seeds()
-    recommendations
+        genres[name] = genre_id
+
+def recommendations_for_user(limit, time_range):
+    #each of these calls to get functions return a dictionary
+    #the dictionaries are keyed by name, and they return the id of the item
+    #which the recommendations function needs
+
+    artist_seeds = get_top_artists(5, time_range).values()
+    track_seeds = get_top_songs(5, time_range).values()
+    genre_seeds = get_top_genres(5, time_range).values()
+
+    recommendations(artist_seeds, genre_seeds, track_seeds, limit = limit)
 
