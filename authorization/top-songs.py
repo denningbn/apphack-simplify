@@ -15,7 +15,7 @@ def get_top_songs(limit, time_range):
         print (idx + 1, album['artists'][0]['name'], " - ",album['name'], " - ", name)
 
 
-def get_top_albums():
+def get_top_artists():
     results = sp.current_user_top_artists(limit=20, offset=0, time_range='medium_term')
 
     for idx, item in enumerate(results['items']):
@@ -56,8 +56,20 @@ def get_top_genres():
     
 
 
-def recommend_genres():
-    seeds = recommendation_genre_seeds()
-    recommendations
-#make_playlist(test, True, False, "we do a little trolling")
-#add_to_playlist()
+def recommend_genres(limit, time_range):
+    genre_seeds = sp.recommendation_genre_seeds()
+
+    tracks = sp.current_user_top_tracks(limit=limit, offset=0, time_range=time_range)
+    for idx, item in enumerate(tracks['items']):   
+        tracks_uri = item['uri']
+
+    artists = sp.current_user_top_artists(limit=20, offset=0, time_range='medium_term')
+    for idx, item in enumerate(artists['item']):
+        artists_uri = item['uri']
+
+    recommendation = sp.recommendations(artists_uri, genre_seeds, tracks_uri, limit)
+
+
+
+
+
