@@ -1,37 +1,40 @@
 import spotipy
 from spotipy.oauth2 import SpotifyOAuth
-from authorization.auth import get_spotify_obj
+from auth import get_spotify_obj
 
-scope = "user-read-email playlist-modify-public user-library-read user-library-modify"
+scope = "user-read-email playlist-modify-public user-library-read user-library-modify user-top-read"
 
 sp = get_spotify_obj(scope)
 
 def get_top_songs(limit, time_range):
     results = sp.current_user_top_tracks(limit=limit, offset=0, time_range=time_range)
 
-    songDict = {}
+    thisList = []
+
     for idx, item in enumerate(results['items']):
         name = item['name']
         song_id = item['id']
-
-        songs[name] = (song_id)
-        #print (idx + 1, album['artists'][0]['name'], " - ",album['name'], " - ", name)
-    return songs
+        artist = item['artists']
+        artist_name = artist[0]
+        artist_name = artist_name['name']
+        songDict = {'name' : name, 'song_id' : song_id, 'artist_name' : artist_name}
+        thisList.append(songDict)
+    return thisList
 
 def get_top_artists(limit, time_range):
     results = sp.current_user_top_artists(limit=limit, offset=0, time_range=time_range)
 
-    artistsDict = {}
+    artistsDict = {'name', 'artist_id'}
 
     for idx, item in enumerate(results['items']):
         popularity = item['popularity']
         genres = item['genres']
         name = item['name']
         artist_id = item['id']
-        artistDict[name] = (artist_id)
+        artistsDict[name] = artist_id
 
         #print(idx + 1, " - ", name)
-    return artistDict
+    return artistsDict
 
 
 
@@ -72,7 +75,7 @@ def get_top_genres(limit, time_range):
     for item in results:
         name = item['name']
         genre_id = item['id']
-
+        
         genres[name] = genre_id
 
 def recommendations_for_user(limit, time_range):
@@ -84,5 +87,6 @@ def recommendations_for_user(limit, time_range):
     track_seeds = get_top_songs(5, time_range).values()
     genre_seeds = get_top_genres(5, time_range).values()
 
-    recommendations(artist_seeds, genre_seeds, track_seeds, limit = limit)
+    recommendations = recommendations(artist_seeds, genre_seeds, track_seeds, limit = limit)
 
+print(get_top_songs(5, 'medium_term'))
