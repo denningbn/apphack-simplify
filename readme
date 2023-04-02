@@ -1,6 +1,11 @@
 This is the project that Drew Templeton, Drew Annas, and I (Nick Denning) are working on.
 
 Installation:
-1. $ pip3 install -r requirements.text
-2. $ python3 -m venv venv
-3. $ . venv/bin/activate
+1. $ python3 -m venv venv
+2. $ . venv/bin/activate
+3. $ pip3 install -r requirements.text
+
+Run:
+1. $ flask run
+2. cd client and $ npm run start
+3. localhost:3000
