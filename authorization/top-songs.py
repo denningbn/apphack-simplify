@@ -9,13 +9,12 @@ sp = get_spotify_obj(scope)
 def get_top_songs(limit, time_range):
     results = sp.current_user_top_tracks(limit=limit, offset=0, time_range=time_range)
 
-    for idx, item in enumerate(results['items']):
+    for idx, item  in enumerate(results['items']):
         album = item['album']
         name = item['name']
         print (idx + 1, album['artists'][0]['name'], " - ",album['name'], " - ", name)
 
-
-def get_top_albums():
+def get_top_artists():
     results = sp.current_user_top_artists(limit=20, offset=0, time_range='medium_term')
 
     for idx, item in enumerate(results['items']):
@@ -53,11 +52,7 @@ def get_top_genres():
     
     genres = [None] * 5
 
-    
-
-
 def recommend_genres():
     seeds = recommendation_genre_seeds()
     recommendations
-#make_playlist(test, True, False, "we do a little trolling")
-#add_to_playlist()
+
