@@ -9,14 +9,17 @@ sp = get_spotify_obj(scope)
 def get_top_songs(limit, time_range):
     results = sp.current_user_top_tracks(limit=limit, offset=0, time_range=time_range)
 
-    songDict = {}
+    thisList = []
+
     for idx, item in enumerate(results['items']):
         name = item['name']
         song_id = item['id']
-
-        songs[name] = (song_id)
-        #print (idx + 1, album['artists'][0]['name'], " - ",album['name'], " - ", name)
-    return songs
+        artist = item['artists']
+        artist_name = artist[0]
+        artist_name = artist_name['name']
+        songDict = {'name' : name, 'song_id' : song_id, 'artist_name' : artist_name}
+        thisList.append(songDict)
+    return thisList
 
 def get_top_artists(limit, time_range):
     results = sp.current_user_top_artists(limit=limit, offset=0, time_range=time_range)
@@ -65,7 +68,6 @@ def get_playlists(limit):
         playlistDict[item['Name']] = item['id']
         #print(idx + 1, " - ", item['name'], " - ", item['id'])
 
-
 def recommendations_for_user(limit, time_range):
     #each of these calls to get functions return a dictionary
     #the dictionaries are keyed by name, and they return the id of the item
@@ -76,5 +78,3 @@ def recommendations_for_user(limit, time_range):
     genre_seeds = sp.recommendation_genre_seeds()
 
     return sp.recommendations(artist_seeds, genre_seeds, track_seeds, limit = limit)
-
-print(get_top_artists(5,'medium_term'))
