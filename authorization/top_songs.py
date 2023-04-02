@@ -91,10 +91,10 @@ def recommendations_for_user(limit, time_range):
 
     return sp.recommendations(seed_artists = artist_ids,seed_genres = seeds, seed_tracks = song_ids, limit = limit, country = "US")
 
-def recommended_playlist(limit, time_range, name):
+def recommended_playlist(limit, time_range):
     recc = recommendations_for_user(limit,time_range)
 
-    new_playlist_id = make_playlist(name, True, False, "Your recommended songs! :D")['id']
+    new_playlist_id = make_playlist("Simplify Recommendations", True, False, "Your recommended songs! :D")['id']
 
 
     recc_song_ids = []
