@@ -1,8 +1,8 @@
 import spotipy
 from spotipy.oauth2 import SpotifyOAuth
-from auth import get_spotify_obj
+from authorization.auth import get_spotify_obj
 
-scope = "user-read-email playlist-modify-public"
+scope = "user-top-read user-read-email playlist-modify-public"
 
 sp = get_spotify_obj(scope)
 
@@ -40,4 +40,4 @@ def make_playlist(name, is_public, is_collaborative, description ):
 def get_user():
     return sp.me()
 
-print(get_user())
+# print(get_user())
