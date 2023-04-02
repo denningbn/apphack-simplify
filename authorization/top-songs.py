@@ -48,9 +48,16 @@ def get_playlists():
     for idx, item in enumerate(results['items']):
         print(idx + 1, " - ", item['name'], " - ", item['id'])
 
+def get_top_genres():
+    results = sp.current_user_top_artists(limit=20, offset=0, time_range='medium_term')
+    
+    genres = [None] * 5
+
+    
 
 
-add_to_playlist("4dxvBhslIPHAkavKg5uqhH", ['https://open.spotify.com/track/4cOdK2wGLETKBW3PvgPWqT'])
-print(get_playlists())
+def recommend_genres():
+    seeds = recommendation_genre_seeds()
+    recommendations
 #make_playlist(test, True, False, "we do a little trolling")
 #add_to_playlist()
