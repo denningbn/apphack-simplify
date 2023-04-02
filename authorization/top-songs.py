@@ -6,8 +6,8 @@ scope = "user-top-read"
 
 sp = get_spotify_obj(scope)
 
-def get_top_songs():
-    results = sp.current_user_top_tracks(limit=20, offset=0, time_range='medium_term')
+def get_top_songs(limit, time_range):
+    results = sp.current_user_top_tracks(limit=limit, offset=0, time_range=time_range)
 
     for idx, item in enumerate(results['items']):
         album = item['album']
@@ -25,4 +25,13 @@ def get_top_albums():
 
         print(idx + 1, " - ", name)
 
+def get_featured_playlists():
+    results = sp.featured_playlists(locale=None, country=None, timestamp=None, limit=20, offset=0)
+    
+    print(results['message'])
+    for idx, item in enumerate(results['playlists']['items']):
+        name = item['name']
+        description = item['description']
+        print(idx + 1, " - ", name, " - ", description)
 
+get_top_songs(20, 'medium_term')
