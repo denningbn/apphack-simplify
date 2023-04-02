@@ -40,4 +40,17 @@ def make_playlist(name, is_public, is_collaborative, description ):
 def get_user():
     return sp.me()
 
-print(get_user())
+def add_to_playlist(playlist_id, items):
+    sp.playlist_add_items(playlist_id, items, position=None)
+
+def get_playlists():
+    results = sp.current_user_playlists(limit=10)
+    for idx, item in enumerate(results['items']):
+        print(idx + 1, " - ", item['name'], " - ", item['id'])
+
+
+
+add_to_playlist("4dxvBhslIPHAkavKg5uqhH", ['https://open.spotify.com/track/4cOdK2wGLETKBW3PvgPWqT'])
+print(get_playlists())
+#make_playlist(test, True, False, "we do a little trolling")
+#add_to_playlist()
