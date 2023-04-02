@@ -54,7 +54,8 @@ def get_featured_playlists(limit):
         print(idx + 1, " - ", name, " - ", description)
 
 def make_playlist(name, is_public, is_collaborative, description ):
-    sp.user_playlist_create(sp.me()['id'], name, public=is_public, collaborative=is_collaborative, description=description)
+    return sp.user_playlist_create(sp.me()['id'], name, public=is_public, collaborative=is_collaborative, description=description)
+
 
 def get_user():
     return sp.me()
@@ -70,26 +71,34 @@ def get_playlists(limit):
         playlistDict[item['Name']] = item['id']
         #print(idx + 1, " - ", item['name'], " - ", item['id'])
 
-def get_top_genres(limit, time_range):
-    results = sp.current_user_top_artists(limit=limit, offset=0, time_range=time_range)
-    
-    genres = {}
-
-    for item in results:
-        name = item['name']
-        genre_id = item['id']
-        
-        genres[name] = genre_id
-
 def recommendations_for_user(limit, time_range):
     #each of these calls to get functions return a dictionary
     #the dictionaries are keyed by name, and they return the id of the item
     #which the recommendations function needs
 
-    artist_seeds = get_top_artists(5, time_range).values()
-    track_seeds = get_top_songs(5, time_range).values()
-    genre_seeds = sp.recommendation_genre_seeds()
 
-    recommendations = recommendations(artist_seeds, genre_seeds, track_seeds, limit = limit)
+    artist_ids = []
 
-print(get_top_songs(5, 'medium_term'))
+    for artist_dict in get_top_artists(1,time_range):
+        artist_ids.append(artist_dict["artist_id"])
+
+    song_ids = []
+
+    for song_dict in get_top_songs(1,time_range):
+        song_ids.append(song_dict["song_id"])
+
+    seeds = sp.recommendation_genre_seeds()
+
+    return sp.recommendations(seed_artists = artist_ids,seed_genres = seeds, seed_tracks = song_ids, limit = limit, country = "US")
+
+def recommended_playlist(limit, time_range, name):
+    recc = recommendations_for_user(limit,time_range)
+
+    new_playlist_id = make_playlist(name, True, False, "Your recommended songs! :D")['id']
+
+
+    recc_song_ids = []
+    for item in recc['tracks']:
+        recc_song_ids.append(item['id'])
+
+    add_to_playlist(new_playlist_id, recc_song_ids)
