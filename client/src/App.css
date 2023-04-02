@@ -13,5 +13,69 @@ body {
   align-content: space-between;
   align-items: center;
   height: 50px;
+  padding: 25px 50px;
+}
+
+.button-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50px;
   padding: 20px 50px;
+}
+
+.list-container {
+  display: flex;
+  flex-direction: column;
+  /* align-items: center; */
+  /* align-content: flex-start; */
+  /* padding: 50px 50px; */
+  border: 2px solid white;
+  border-radius: 3px;
+  margin: 100px;
+  max-width: 75vw;
+}
+
+.list-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 30px;
+  padding: 25px;
+  background-color: aqua;
+  font-size: large;
+  font-weight: 400;
+}
+
+.list-options {
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+}
+
+.list-options button {
+}
+
+.list-wrapper {
+  background-color: black;
+  color: white;
+  padding: 60px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.list-item {
+  display: flex;
+  gap: 30px;
+}
+
+.rec-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 75px;
+  margin-bottom: 125px;
+  
 }

@@ -1,10 +1,9 @@
 import spotipy
 from spotipy.oauth2 import SpotifyOAuth
-from auth import get_spotify_obj
-from auth import get_spotify_obj
+from authorization.auth import get_spotify_obj
+# from auth import get_spotify_obj
 
-scope = "user-read-email playlist-modify-public user-library-read user-library-modify user-top-read"
-scope = "user-read-email playlist-modify-public user-library-read user-library-modify user-top-read"
+scope = "user-read-email playlist-modify-public user-library-read user-library-modify"
 
 sp = get_spotify_obj(scope)
 
@@ -102,3 +101,4 @@ def recommended_playlist(limit, time_range):
         recc_song_ids.append(item['id'])
 
     add_to_playlist(new_playlist_id, recc_song_ids)
+    return new_playlist_id
