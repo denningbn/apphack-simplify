@@ -98,5 +98,3 @@ def recommended_playlist(limit, time_range, name):
         recc_song_ids.append(item['id'])
 
     add_to_playlist(new_playlist_id, recc_song_ids)
-
-recommended_playlist(30, 'medium_term', "Recommendations")
