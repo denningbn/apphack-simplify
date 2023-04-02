@@ -9,17 +9,18 @@ export const App = () => {
   const [topTracksData, setTopTrackData] = useState([]);
   const [isDisabled, setIsDisabled] = useState(false);
 
-  const getLogin = async () => {
+  const getLogin = () => {
     // console.log("LOGIN")
     fetch("http://127.0.0.1:5000/user")
       .then((response) => response.json())
       .then((data) => {
         setUserData(data);
-        // console.log(data);
+        setIsLoggedIn(true);
+        getTopTracks("medium_term");  
       });
 
-    setIsLoggedIn(true);
-    getTopTracks("medium_term");
+    // setIsLoggedIn(true);
+    // getTopTracks("medium_term");
   };
 
   const getTopTracks = (timeframe) => {
@@ -52,7 +53,7 @@ export const App = () => {
         </div>
       )}
       {isLoggedIn && (
-        <>
+        <div className="body-container">
           <ItemList data={topTracksData} getTopTracks={getTopTracks}></ItemList>
           <div className="rec-box">
             <button
@@ -63,7 +64,7 @@ export const App = () => {
               {isDisabled ? "Playlist Created!" : "Make Recommendation Playlist"}
             </button>
           </div>
-        </>
+        </div>
       )}
     </>
   );

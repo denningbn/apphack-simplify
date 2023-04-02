@@ -1,7 +1,9 @@
 import React from "react";
+import { useState } from "react";
 import "../App.css";
 
 export const ItemList = ({ data, getTopTracks }) => {
+  const [activeButton, setActiveButton] = useState(2);
   // console.log(data)
   // console.log(getTopTracks);
 
@@ -11,15 +13,32 @@ export const ItemList = ({ data, getTopTracks }) => {
       <div className="list-options">
         <p>Time period:</p>
         <button
-          className="btn btn-dark"
-          onClick={() => getTopTracks("short_term")}
+          className={activeButton === 1 ? "btn btn-success" : "btn btn-dark"}
+          onClick={() => {
+            getTopTracks("short_term");
+            setActiveButton(1);
+          }}
         >
           Last 4 weeks
         </button>
-        <button className="btn btn-dark" onClick={() => getTopTracks("medium_term")}>
+        <button
+          className={activeButton === 2 ? "btn btn-success" : "btn btn-dark"}
+          onClick={() => {
+            getTopTracks("medium_term");
+            setActiveButton(2);
+          }}
+        >
           Last 6 months
         </button>
-        <button className="btn btn-dark" onClick={() => getTopTracks("long_term")}>All time</button>
+        <button
+          className={activeButton === 3 ? "btn btn-success" : "btn btn-dark"}
+          onClick={() => {
+            getTopTracks("long_term");
+            setActiveButton(3);
+          }}
+        >
+          All time
+        </button>
       </div>
       <div className="list-wrapper">
         <ol>
