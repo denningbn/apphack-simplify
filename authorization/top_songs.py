@@ -1,7 +1,9 @@
 import spotipy
 from spotipy.oauth2 import SpotifyOAuth
 from auth import get_spotify_obj
+from auth import get_spotify_obj
 
+scope = "user-read-email playlist-modify-public user-library-read user-library-modify user-top-read"
 scope = "user-read-email playlist-modify-public user-library-read user-library-modify user-top-read"
 
 sp = get_spotify_obj(scope)
@@ -24,17 +26,18 @@ def get_top_songs(limit, time_range):
 def get_top_artists(limit, time_range):
     results = sp.current_user_top_artists(limit=limit, offset=0, time_range=time_range)
 
-    artistsDict = {'name', 'artist_id'}
+    artists = []
 
     for idx, item in enumerate(results['items']):
         popularity = item['popularity']
         genres = item['genres']
         name = item['name']
         artist_id = item['id']
-        artistsDict[name] = artist_id
 
-        #print(idx + 1, " - ", name)
-    return artistsDict
+        artist = {"artist_name" : name, "artist_popularity" : popularity, "artist_id" : artist_id}
+
+        artists.append(artist)
+    return artists
 
 
 
@@ -85,7 +88,7 @@ def recommendations_for_user(limit, time_range):
 
     artist_seeds = get_top_artists(5, time_range).values()
     track_seeds = get_top_songs(5, time_range).values()
-    genre_seeds = get_top_genres(5, time_range).values()
+    genre_seeds = sp.recommendation_genre_seeds()
 
     recommendations = recommendations(artist_seeds, genre_seeds, track_seeds, limit = limit)
 
